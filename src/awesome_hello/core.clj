@@ -4,9 +4,13 @@
 
 (defn handler
   [request]
-    (println "got request from" (:remote-addr request) "for" (:uri request))
-    (let [uri (:uri request)]
+  (println "got request from" (:remote-addr request) "for" (:uri request))
+  (flush)
+  (let [uri (:uri request)]
       (cond
+        (= uri "/health")
+        {:status 200
+         :body   "ok"}
         (= uri "/hello")
         {:status  200
          :headers {"Content-Type" "text/ascii"}
